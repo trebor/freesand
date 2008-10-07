@@ -53,7 +53,7 @@ public class World extends BufferedImage implements Transferable
          // globals
 
 
-         /** array providing direct access to image pixles */
+         /** array providing direct access to image pixels */
 
       protected int[]   pixels;
 
@@ -80,7 +80,7 @@ public class World extends BufferedImage implements Transferable
       protected int     background = AIR;
 
 
-         /** idicates that a given pixel is not going to change this
+         /** indicates that a given pixel is not going to change this
           * update cycle */
 
       public static final int   NO_CHANGE      = -1;
@@ -110,14 +110,14 @@ public class World extends BufferedImage implements Transferable
     
          // color constants, which must be in enum to allow 
          // initialization of Element enum (go figure)
-         // this is a (somewhat failed) attempt to get nice
-         // standardized way of represnting colors
+         // this is a (somewhat failed) attempt to get a nice
+         // standardized way of representing colors
       
       static enum ClrConst
       {
             // hues
 
-         RED_HUE          (Color.RED),
+            RED_HUE       (Color.RED),
             ORANGE_HUE    (Color.ORANGE),
             ORANGEISH_HUE (45f / 360f),
             YELLOW_HUE    (Color.YELLOW),
@@ -165,7 +165,7 @@ public class World extends BufferedImage implements Transferable
       {
             // basic elements
 
-         AIR_EL    ("Air",    BLACK, null),
+            AIR_EL    ("Air",    BLACK, null),
             WATER_EL  ("Water",  BLUE_HUE,      SAT1,  BRIGHT1, null),
             SAND_EL   ("Sand",   YELLOW_HUE,    SAT3,  BRIGHT1, null),
             EARTH_EL  ("Earth",  ORANGEISH_HUE, SAT2,  BRIGHT2, null),
@@ -173,13 +173,13 @@ public class World extends BufferedImage implements Transferable
             PLANT_EL  ("Plant",  GREEN_HUE,     SAT1,  BRIGHT1, null),
             ROCK_EL   ("Rock",   RED_HUE,       SAT5,  BRIGHT3, null),
 
-               // valuebles
+               // valuables
 
             GOLD_EL   ("Gold",   ORANGEISH_HUE, SAT1,  BRIGHT1, null),
             SILVER_EL ("Silver", RED_HUE,       SAT5,  BRIGHT2, null),
             COPPER_EL ("Copper", RED_HUE,       SAT1,  BRIGHT2, null),
 
-               // fire!
+				// fire!
 
             FIRE1_EL  ("Fire",  new Color(204,   0,   0), null),
             FIRE2_EL  ("Fire2", new Color(255, 204,  51), null),
@@ -194,8 +194,13 @@ public class World extends BufferedImage implements Transferable
             WATER_SOURCE_EL ("Water Source", WATER_EL.darker(),        WATER_EL),
             SAND_SOURCE_EL  ("Sand Source",  SAND_EL.darker(),         SAND_EL),
             FIRE_SOURCE_EL  ("Fire Source",  FIRE1_EL.darker(),        FIRE1_EL),
-            OIL_SOURCE_EL   ("Oil Source",   OIL_EL.darker(),          OIL_EL);
+            OIL_SOURCE_EL   ("Oil Source",   OIL_EL.darker(),          OIL_EL),
          
+			// evolved materials
+			
+			STEAM_EL		("Steam",		CYAN_HUE, SAT3, BRIGHT1, null),
+			COLUMBINE_EL	("Columbine",	MAGENTA_HUE, SAT1, BRIGHT1, null);
+			
             // fields
          
          final String  elementName;
@@ -263,9 +268,9 @@ public class World extends BufferedImage implements Transferable
             this.sourceOf = sourceOf;
          }
             /** 
-             * Return a darker version of this elements color.
+             * Return a darker version of this element's color.
              *
-             * @return A darker verions of this elements color.
+             * @return A darker verions of this element's color.
              */
 
          public Color darker()
@@ -273,9 +278,9 @@ public class World extends BufferedImage implements Transferable
             return color.darker();
          }
             /** 
-             * Return a brighter version of this elements color.
+             * Return a brighter version of this element's color.
              *
-             * @return A brighter verions of this elements color.
+             * @return A brighter verions of this element's color.
              */
 
          public Color brighter()
@@ -325,7 +330,7 @@ public class World extends BufferedImage implements Transferable
             return lookup(color.getRGB());
          }
             /** 
-             * Find the element that exactly matches the provided rgbvalue.
+             * Find the element that exactly matches the provided rgb value.
              *
              * @param rgbValue rgb value to test against candidate elements
              * @return The matching element or null if not found.
@@ -339,7 +344,7 @@ public class World extends BufferedImage implements Transferable
             return null;
          }
             /** 
-             * Find the element that is the nearsted match to the
+             * Find the element that is the nearest match to the
              * provided color.
              *
              * @param c color to match
@@ -371,7 +376,7 @@ public class World extends BufferedImage implements Transferable
             return nearest;
          }
             /** 
-             * Find an elemnts source or output.
+             * Find an element's source or output.
              *
              * @return The source our output of this element, or null if
              * there is none.
@@ -458,6 +463,10 @@ public class World extends BufferedImage implements Transferable
 
       public static final int WATER_SOURCE = WATER_SOURCE_EL.getValue();
 
+       /** steam source element integer value */
+
+      public static final int STEAM = STEAM_EL.getValue();
+
          /** sand source element integer value */
 
       public static final int SAND_SOURCE  = SAND_SOURCE_EL.getValue();
@@ -469,6 +478,10 @@ public class World extends BufferedImage implements Transferable
          /** oil source element integer value */
 
       public static final int OIL_SOURCE   = OIL_SOURCE_EL.getValue();
+
+         /** columbine source element integer value */
+
+      public static final int COLUMBINE   = COLUMBINE_EL.getValue();
 
          /**
           * Construct a world, copying content from another world. Set
@@ -595,7 +608,7 @@ public class World extends BufferedImage implements Transferable
 
          super(width, height, TYPE_INT_ARGB);
 
-            // get worl parameters
+            // get world parameters
 
          this.background = bgElement.getValue();
          this.width = width;
@@ -618,7 +631,7 @@ public class World extends BufferedImage implements Transferable
       }
          /** 
           * Initialze world to some value.  This is provided as a
-          * virtuale hook to programs which may which to extend this
+          * virtual hook to programs which may which to extend this
           * class.  This implementation does nothing.
           */
 
@@ -626,7 +639,7 @@ public class World extends BufferedImage implements Transferable
       {
       }
          /**
-          * Fill entier world with provided element
+          * Fill entire world with provided element.
           *
           * @param el element to paint world
           */
@@ -636,7 +649,7 @@ public class World extends BufferedImage implements Transferable
          fill(el.getColor());
       }
          /**
-          * Fill entier world with provided color value
+          * Fill entire world with provided color value.
           *
           * @param color color value to paint world
           */
@@ -646,7 +659,7 @@ public class World extends BufferedImage implements Transferable
          fill(new Color(color));
       }
          /**
-          * Fill entier world with provided color.
+          * Fill entire world with provided color.
           *
           * @param color color to paint world
           */
@@ -668,7 +681,7 @@ public class World extends BufferedImage implements Transferable
          g.drawImage(this, 0, 0, null);
       }
          /** 
-          * Uppdate the world state.  Note that the follow code is a
+          * Update the world state.  Note that the following code is a
           * morass of if conditionals.  This is done so that the code
           * runs fast.  It would be easy to come up with an abstraction
           * layer which would make this code more general and robust,
@@ -679,7 +692,7 @@ public class World extends BufferedImage implements Transferable
       
       public void update()
       {
-            // start from the bottome of the world
+            // start from the bottom of the world
 
          for (int y = height - 1; y >= 0; --y)
          {
@@ -687,7 +700,7 @@ public class World extends BufferedImage implements Transferable
 
             int thisOffset = y * width;
             
-               // are we at top or bottom
+               // are we at top or bottom?
 
             boolean atTop = y == 0;
             boolean atBot = y == height - 1;
@@ -700,11 +713,11 @@ public class World extends BufferedImage implements Transferable
                
                int ip = thisOffset + x;
                
-                  // value this pixel
+                  // value of this pixel
 
                int p = pixels[ip];
 
-                  // don't do process certain things
+                  // don't process inert matter
 
                if (p == AIR || p == ROCK || p == EARTH)
                   continue;
@@ -732,7 +745,7 @@ public class World extends BufferedImage implements Transferable
                int l =  atLeft           ? ROCK : pixels[il];
                int r =  atRight          ? ROCK : pixels[ir];
                
-                  // the follwing actions propogate elements around the
+                  // the following actions propogate elements around the
                   // world, they do not conserve matter
 
                   // if fire, propogate fire
@@ -749,16 +762,19 @@ public class World extends BufferedImage implements Transferable
                   for (int ib: burn)
                   {
                      int b = pixels[ib];
-
-                     if ((b == PLANT || b == OIL) &&
+					 
+					 // fire burns plants and oil, makes steam out of water
+					 
+                     if ((b == PLANT || b == OIL || b == COLUMBINE) &&
                          rnd.nextInt(FIRE_CHANCE_IN) == 0)
                         pixels[ib] = FIRE1;
                      else
                         if (b == WATER)
                         {
-                           pixels[ib] = AIR;
-                           pixels[ip] = AIR;
-                           p = AIR;
+                           pixels[ib] = STEAM;
+                           pixels[ip] = STEAM;
+						   pixels[iuc] = STEAM;
+                           p = STEAM;
                            break;
                         }
                   }
@@ -795,6 +811,13 @@ public class World extends BufferedImage implements Transferable
                      continue;
                   }
                }
+                  // if this is steam, evaporate into air
+
+               if (p == STEAM)
+               {     pixels[ip] = AIR;
+                     continue;
+			   }
+
                   // if this is an everything sucker
 
                if (p == AIR_SOURCE)
@@ -865,13 +888,23 @@ public class World extends BufferedImage implements Transferable
                                    atBot   || atLeft  ? ip : idl,
                                    atBot   || atRight ? ip : idr,
                   };
+				  if (pixels[idl] == PLANT && pixels[idc] == PLANT && 
+				      pixels[idr] == PLANT && pixels[ir] == PLANT && 
+					  pixels[il] == PLANT && pixels[iuc] == WATER)
+					    pixels[ip] = COLUMBINE;
                   for (int ix: targets)
                      if (pixels[ix] == AIR)
                         for (int it: targets)
                            if (pixels[it] == WATER && rnd.nextInt(PLANT_CHANCE_IN) == 0)
                               pixels[it] = PLANT;
-                  continue;
+				  continue;
                }
+                  // if this is a flower
+
+               if (p == COLUMBINE)
+			   {
+			   continue;
+			   }
                   // if this is a fire source
 
                if (p == FIRE_SOURCE)
@@ -895,7 +928,7 @@ public class World extends BufferedImage implements Transferable
 
                if (p == OIL)
                {
-                     // comput indices for up left and up right
+                     // compute indices for up left and up right
 
                   int iul = iuc - 1;
                   int iur = iuc + 1;
@@ -983,7 +1016,7 @@ public class World extends BufferedImage implements Transferable
 
                else if (p == WATER)
                {
-                     // comput indices for up left and up right
+                     // compute indices for up left and up right
 
                   int iul = iuc - 1;
                   int iur = iuc + 1;

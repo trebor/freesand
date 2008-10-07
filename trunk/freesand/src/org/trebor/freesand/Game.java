@@ -81,7 +81,7 @@ public class Game extends JFrame
 
     /** default world height */
 
-    public static final int    WORLD_HEGITH   = 300;
+    public static final int    WORLD_HEIGHT   = 300;
 
     /** frequency to paint graphics */
 
@@ -223,7 +223,7 @@ public class Game extends JFrame
 
     protected double             brushSize = 1 + MIN_BRUSH_SIZE;
 
-    /** angel to rotate brush shape by */
+    /** angle to rotate brush shape by */
 
     protected double             brushAngle = 0;
 
@@ -243,7 +243,7 @@ public class Game extends JFrame
 
     protected Color              backGround = new Color(64, 64, 64);
 
-    /** force window to repainted at next oportunity */
+    /** force window to be repainted at next oportunity */
 
     protected boolean            forcePaint = false;
 
@@ -306,7 +306,7 @@ public class Game extends JFrame
 
     public static Shape heart    = createHeartShape();
 
-    /** start shape */
+    /** star shape */
 
     public static Shape star     = createStar(5);
 
@@ -462,7 +462,7 @@ public class Game extends JFrame
           }
       };
 
-    // test performance of variouse elements
+    // test performance of various elements
 
     SandAction actionPerformanceTest = new SandAction(
       "Performance Tests",
@@ -497,12 +497,12 @@ public class Game extends JFrame
           }
       };
 
-    // exit programe
+    // exit program
 
     SandAction actionExit = new SandAction(
       "Exit Program",
       getKeyStroke(VK_Q, META_MASK),
-      "quite this programe")
+      "quit this program")
       {
           public void actionPerformed(ActionEvent e)
           {
@@ -749,7 +749,7 @@ public class Game extends JFrame
 
                 worldPanel.repaint();
 
-                // update timee sum and mark that we did
+                // update time sum and mark that we did
                 // force paint
 
                 worldSum = 0;
@@ -797,14 +797,14 @@ public class Game extends JFrame
 
     /**
      * Main entry point into program.  It creates and starts a
-     * freesand game. It also sets the mac sytle menus.
+     * freesand game. It also sets the mac style menus.
      *
      * @param  args currently ignored
      */
 
     static public void main(String[] args)
     {
-      // if we're on a mac, us mac style menus
+      // if we're on a mac, use mac style menus
 
       System.setProperty("apple.laf.useScreenMenuBar", "true");
 
@@ -852,12 +852,12 @@ public class Game extends JFrame
       setPaintCursor();
     }
     /**
-     * Put together elemenst of the gui frame.
+     * Put together elements of the gui frame.
      */
 
     protected void constructFrame()
     {
-      // indentfy the frame
+      // indentify the frame
 
       frame = this;
 
@@ -986,7 +986,7 @@ public class Game extends JFrame
             }
         };
       worldPanel.setPreferredSize(
-        new Dimension(WORLD_WIDTH, WORLD_HEGITH));
+        new Dimension(WORLD_WIDTH, WORLD_HEIGHT));
       worldPanel.setLayout(null);
       add(worldPanel);
 
@@ -1016,7 +1016,7 @@ public class Game extends JFrame
 
                         sleep(RESIZE_DELAY);
 
-                        // if, when woke up, some other
+                        // if, when woken up, some other
                         // delay thread has not been
                         // created, then we'll it handle
                         // the resize event
@@ -1137,7 +1137,7 @@ public class Game extends JFrame
 
       if (fullScreenCbmi.isSelected())
       {
-        // if full screen is supported setup frame accoringly
+        // if full screen is supported setup frame accordingly
 
         if (gv.isFullScreenSupported())
         {
@@ -1222,7 +1222,7 @@ public class Game extends JFrame
     {
       pushPaused(true);
 
-      // get the world palen dimentions
+      // get the world panel dimensions
 
       width = worldPanel.getWidth();
       height = worldPanel.getHeight();
@@ -1257,7 +1257,7 @@ public class Game extends JFrame
       forcePaint = true;
     }
     /**
-     * Paset image in copy/paste buffer to world frame.
+     * Paste image in copy/paste buffer to world frame.
      */
 
     public void paste()
@@ -1291,7 +1291,7 @@ public class Game extends JFrame
       forcePaint = true;
     }
     /**
-     * Covert pixles in provided image to nearest {@link Element} color.
+     * Convert pixels in provided image to nearest {@link Element} color.
      *
      * @param  image image to convert
      * @return The modified image passed to this function. No new image is created.
@@ -1486,7 +1486,7 @@ public class Game extends JFrame
       }
     }
     /**
-     * Set the world image to the that provide image.
+     * Set the world image to the provided image.
      *
      * @param  rawImage image to set as the new world image
      */
@@ -1495,7 +1495,7 @@ public class Game extends JFrame
     {
       pushPaused(true);
 
-      // conver image to buffered image with corrected pixel colors
+      // convert image to buffered image with corrected pixel colors
 
       BufferedImage image = new BufferedImage(
         rawImage.getWidth(null),
@@ -1508,7 +1508,7 @@ public class Game extends JFrame
 
       World newWorld = new World(image);
 
-      // if new world differntly sized then current, maybe
+      // if new world differntly sized than current, maybe
       // the window should be resized
 
       if (newWorld.width != worldPanel.getWidth() || newWorld.height != worldPanel.getHeight())
@@ -1533,7 +1533,7 @@ public class Game extends JFrame
           worldPanel.invalidate();
           pack();
 
-          // get the world panel dimentions
+          // get the world panel dimensions
 
           // construct the world
 
@@ -1588,7 +1588,7 @@ public class Game extends JFrame
 
         Vector<Result> results = new Vector<Result>();
 
-        // eusure that the system is running
+        // ensure that the system is running
 
         unpause();
 
@@ -1630,7 +1630,7 @@ public class Game extends JFrame
         //Vector<Result> checkedResult = (Vector<Result>)Collections.checkedCollection(results, Result.class);
         Collections.sort(results);
 
-        // establish the fasted element
+        // establish the fastest element
 
         double fastest = 0;
         for (Result result: results)
@@ -1790,7 +1790,7 @@ public class Game extends JFrame
     /**
      * Fill entire world image with a provided element.  This
      * function must pause or the animation thread may cause one
-     * pixle to be missed.
+     * pixel to be missed.
      *
      * @param  element element to fill image with
      */
@@ -1802,7 +1802,7 @@ public class Game extends JFrame
     /**
      * Fill entire world image with a provided color.  This
      * function must pause or the animation thread may cause one
-     * pixle to be missed.
+     * pixel to be missed.
      *
      * @param  color color to fill image with
      */
@@ -1849,7 +1849,7 @@ public class Game extends JFrame
      *
      * @param  shape shape to create image with
      * @param  color color to fill shape when it's drawn into image
-     * @param  antialias weather or not to antialias the painted shape
+     * @param  antialias whether or not to antialias the painted shape
      * @return A BufferedImage the size of the provided shape.
      */
 
@@ -1865,7 +1865,7 @@ public class Game extends JFrame
         size, size,
         BufferedImage.TYPE_4BYTE_ABGR);
 
-      // pain the shape onto the image
+      // paint the shape onto the image
 
       Graphics2D g = (Graphics2D)image.getGraphics();
       if (antialias)
@@ -1881,11 +1881,11 @@ public class Game extends JFrame
 
       return image;
     }
-    // set cursor of a container and all it's descendents
+    // set cursor of a container and all its descendents
 
     /**
-     * Set the cursor for a given container and all it's descendents.
-     * @deprecated This function should nologer be needed as
+     * Set the cursor for a given container and all its descendents.
+     * @deprecated This function should no loger be needed as
      * cursors are being handled in a better way.
      *
      * @param  container container to change cursor of
@@ -1988,7 +1988,7 @@ public class Game extends JFrame
     {
         Element element;
 
-        // create a element selection action
+        // create element selection action
 
         public ElementSelectionAction(Element element, KeyStroke key)
         {
@@ -2068,7 +2068,7 @@ public class Game extends JFrame
     /**
      * Paint provided message onto the provided graphics object as
      * big as possible.  The function does not know how to handle
-     * carrage returns.
+     * carriage returns.
      *
      * @param  g graphic on which to draw message
      * @param  message message to draw
@@ -2108,7 +2108,7 @@ public class Game extends JFrame
       g.setFont(font);
     }
     /**
-     * Given a color, compute a close color which will be visable
+     * Given a color, compute a close color which will be visible
      * if overlayed on the original color.
      *
      * @param  color color to find match to
@@ -2170,7 +2170,7 @@ public class Game extends JFrame
       Area cat = new Area(circle);
       Area wisker = new Area(new Rectangle2D.Double(0, -.01, .3, .02));
 
-      // create left wiskes
+      // create left wiskers
 
       Area leftWiskers = new Area();
       leftWiskers.add(rotate(wisker, -20));
@@ -2259,7 +2259,7 @@ public class Game extends JFrame
       translate(eye, .3, 0);
       dog.subtract(eye);
 
-      // add nose
+      // add snout
 
       Area snout = new Area(circle);
       scale(snout, .30, .30);
