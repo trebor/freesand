@@ -1,18 +1,4 @@
-#summary One-sentence summary of this page.
-
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
-
-this is a test
+#summary freesand -- a pure java implementation of falling sand.
 
 = overview =
 
@@ -30,27 +16,26 @@ build environment packages are also provided.  the windows/*nix package has NOT 
 
 mac os x installation:
 
-   1. download and mount freesand.dmg
-   2. drag FreeSand.app to applications directory
-   3. double click FreeSand.app to start
+ # download and mount freesand.dmg
+ # drag FreeSand.app to applications directory
+ # double click FreeSand.app to start
 
 if the application does not start properly, it is possible that you have an older version of java.  if you have mac os 10.4, running the software update from the apple menu should update the java version.
 
 
 windows/*nix installation:
 
-   1. download freesand.jar 
-   2. double click that jar
+ # download freesand.jar 
+ # double click that jar
 
 if the program does not start properly, it is possible that you have an older version of java.  an up-to-date version of java can be found at http://java.sun.com/.
 
 == out of date text ==
 
-
 mac os x build environment installation:
 
-   1. download and mount freesand-build.dmg
-   2. drag freesand folder to your local drive
+ # download and mount freesand-build.dmg
+ # drag freesand folder to your local drive
 
 the build environment requires apache ant, which is included in the apple developer tools.  it was developed with ant version 1.6.5.  for a list of provided build targets type:
 
